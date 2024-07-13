@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notesapp/components/drawer.dart';
 import 'package:notesapp/models/note.dart';
 import 'package:notesapp/models/note_database.dart';
 import 'package:provider/provider.dart';
@@ -106,6 +107,7 @@ class _NotesPageState extends State<NotesPage> {
       appBar: AppBar(
         // title: const Text('Local Storage'),
         backgroundColor: Colors.transparent,
+        foregroundColor: Theme.of(context).colorScheme.inversePrimary,
         elevation: 0,
       ),
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -114,7 +116,7 @@ class _NotesPageState extends State<NotesPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         child: const Icon(Icons.add),
       ),
-      drawer: Drawer(),
+      drawer: const MyDrawer(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
