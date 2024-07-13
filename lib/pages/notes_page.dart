@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:notesapp/components/drawer.dart';
+import 'package:notesapp/components/note_tile.dart';
 import 'package:notesapp/models/note.dart';
 import 'package:notesapp/models/note_database.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +30,7 @@ class _NotesPageState extends State<NotesPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.surface,
         content: TextField(
           controller: textController,
         ),
@@ -65,6 +67,7 @@ class _NotesPageState extends State<NotesPage> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
+              backgroundColor: Theme.of(context).colorScheme.surface,
               title: Text("Update Note"),
               content: TextField(
                 controller: textController,
@@ -113,14 +116,17 @@ class _NotesPageState extends State<NotesPage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       floatingActionButton: FloatingActionButton(
         onPressed: createNote,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        child: const Icon(Icons.add),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).colorScheme.inversePrimary,
+        ),
       ),
       drawer: const MyDrawer(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //heading 
+          //heading
           Padding(
             padding: const EdgeInsets.only(left: 25.0),
             child: Text(
@@ -132,7 +138,6 @@ class _NotesPageState extends State<NotesPage> {
             ),
           ),
 
-
           //list of notes
           Expanded(
             child: ListView.builder(
@@ -140,23 +145,27 @@ class _NotesPageState extends State<NotesPage> {
               itemBuilder: (context, index) {
                 //get individual note
                 final note = currentNotes[index];
-            
+
                 //list tile UI
-                return ListTile(
-                  title: Text(note.text),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      //edit button
-                      IconButton(onPressed: ()=> updateNote(note) , icon: const Icon(Icons.edit)),
-            
-                      //delete button
-                      IconButton(onPressed: ()=> deleteNote(note.id) , icon: const Icon(Icons.delete)),
-            
-            
-                    ],
-                  ),
+                return NoteTile(
+                  text: note.text,
+                  onEditPressed: () => updateNote(note),
+                  onDeletePressed: () => deleteNote(note.id),
                 );
+                // return ListTile(
+                //   title: Text(note.text),
+                //   trailing: Row(
+                //     mainAxisSize: MainAxisSize.min,
+                //     children: [
+                //       //edit button
+                //       IconButton(onPressed: ()=> updateNote(note) , icon: const Icon(Icons.edit)),
+
+                //       //delete button
+                //       IconButton(onPressed: ()=> deleteNote(note.id) , icon: const Icon(Icons.delete)),
+
+                //     ],
+                //   ),
+                // );
               },
             ),
           ),
